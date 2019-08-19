@@ -1,0 +1,9 @@
+*.Rproj*
+.Rhistory
+test.stan
+.Rproj.user
+*.pbs.*
+junk/*
+
+*.pdf
+

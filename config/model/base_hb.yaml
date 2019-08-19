@@ -1,0 +1,12 @@
+model: mixture
+param_func:
+  - gamma_density
+  - weibull_density
+dispersion: variable
+minimum_age: 13
+maximum_age: 55
+time_dimension: Cohort
+T_holdback: 10
+T_forecast: 10
+out_dir: "results/mcmc"
+n_dispersion_basis: 8

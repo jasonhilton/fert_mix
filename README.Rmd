@@ -1,0 +1,179 @@
+---
+title: "Forecasting fertility with Bayesian parametric mixtures"
+author: "Jason Hilton"
+date: "13 March 2019"
+output: html_document
+---
+
+
+
+This repository provides the code needed to produce the results for the paper
+"Forecasting Fertility using Bayesian Parametric Mixture Models" by Jason Hilton, Jonathan J. Forster, Peter W.F. Smith and Jakub Bijak.
+
+The code is design so that the results can be replicated by running a series of `R` and shell scripts.
+
+
+## Requirements
+
+Running the code requires a recent version of `R` (>3.5 is probably best) and of `rstan`, the `R` interface to  (see here)[https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started].
+To run the assessment across a range of models and countries, a High Performance Computing (HPC) environment with the same setup and which accepts jobs with Portable Batch System (PBS) is needed.
+
+A range of other R packages is needed. These can be installed by running the `install_packages.R` script from same directory as this read-me file (this will obviously make changes to the R installation on your machine):
+
+```{bash, eval=F}
+Rscript scripts/install_packages.R
+```
+
+## Get the data
+
+Before downloading the data, it is necessary to obtain a [Human Fertility Database](https://www.humanfertility.org/cgi-bin/main.php) account, and to set environment variables containing your username and password. You can do this by adding the following lines to your `.Renviron.site` file (create one if you do not already have one), which will be in the directory specified by running the command `R.home()` in the R console, in the `etc` sub-folder.
+
+```{bash, eval=F}
+HFD_user=user
+HFD_pass=pass
+
+```
+
+The data can then be obtained running the following shell commands:
+
+```{bash, eval=F}
+Rscript scripts/get_data.R VV
+Rscript scripts/get_data.R RR
+
+```
+The two arguments to the scripts, "VV" and "RR", refer to the two different data configurations, age-cohort and age-period respectively.
+
+## Run the model
+
+A single model can be run by running another script, passing in a reference to a config file that contains the model setup, together with specifying the country for which you want to run the model. The default settings are provided in the file `config/base_hb.yaml`, but you can write your own configuration by editing this file and re-saving, if desired.
+To run the model with these settings for England and Wales, run:
+
+```{bash, eval=F}
+Rscript scripts/run_model.R GBRTENW base_hb
+
+
+```
+
+GBRTENW is the Human Fertility Database code for England and Wales. The other possibilities are FRATNP, USA, and SWE for France, USA and Sweden respectively.
+
+## Run a batch of models 
+
+**Requires HPC environment**
+
+A set of model runs are specified and save to csv through the file `script/make_csv_files.R`.
+The `bash` script `send_csv_jobs.sh` runs this R script and then submits a PBS job array to run every model specified therein, running assessments on each model and saving out the results.
+All that is required is to run the shell script from within the HPC environment:
+
+```{bash, eval=F}
+send_csv_jobs.sh
+
+```
+
+This will save results to a sub-folder of the `mcmc_results` folder named `run_` plus the date and time at which the model was run ( format `yyyymmdd_hhmmss`). After all runs are completed, this folder will contain sub-folders for each country with one `.rds` file for each model specification, each contain a list with the data used to fit the model, the fitted stan model object, and the git hash identifying the version of the code used. There will also be one summary `assessment_` file for each model, indexed by the line in the csv file it relates to.
+
+## Recalculate LOOIC values
+
+Pareto Smoothed Importance Sampling approximations of Leave-One-Out predictive densities (Vehtari et al. 2016) are used to assess the model's ability to predict a single left out point within the range of the observed data. However, many models have high values of the Pareto-K diagnostic for some observations, indicating that the calculated values of the Leave-one-out Information Criterion are unreliable. After the batch of the stan model sampling runs triggered by the script `send_jobs_csv.sh` is complete, an additional script is called (`scripts/compute_loos.R`) that identifies problematic points for each model. This script also specifies a new set of model runs to refit the model with groups of such points left out, so that the 'true' value of the predictive score can be calculated. These additional model runs are detailed in a csv file in the folder `run_specs/lko`.
+
+These jobs can be executed with the HPC environment through another script.
+
+```{bash, eval=F}
+send_jobs_lko_csv.sh
+```
+
+At this point, it is recommended to copy the mcmc_results and processed folders from your HPC environment to your local machine.
+
+
+
+Note that the generated results folder has a time-stamp in its file name. `run_yyyymmdd_hhmmss`.
+
+Finally, the corrected values of the LOOIC metric is constructed from the results of the refitting exercise with the following script.
+
+```{bash, eval=F}
+Rscript scripts/recompute_loo.R
+```
+
+## Run comparator models 
+
+
+Results can be compared against some competitor models. 
+A minimalist R package written by this author `bfcf` (Bayesian Forecasting of Cohort Fertility) is required to implement the method of Schmertmann et al. This is also provided for reviewers. This package is based entirely on the code kindly made publicly available at [http://schmert.net/cohort-fertility/](http://schmert.net/cohort-fertility/). The code for fitting the Myrskylla model is adapted from that generously provided in the supplemental material to the Bohk-Ewald et al. 2018. 
+
+The results of these can be obtained (and saved in the `processed` folder) by running the scripts below.
+
+
+```{bash, eval=F}
+Rscript scripts/freeze_rates_eval.R
+Rscript scripts/process_myrskylla.R
+Rscripts scripts/process_schmertmann.R
+
+```
+
+## Create Plot data 
+
+The plot of the posterior distribution of rates requires a bit of simple preprocessing. This is done using the command:
+
+
+```{bash, eval=F}
+Rscript scripts/get_rate_plot_data.R
+```
+
+
+## Create the paper
+
+Finally, the paper can be created by running the script below.
+
+
+
+```{bash, eval=F}
+Rscript scripts/process_rmd.R
+
+```
+
+
+## System info
+```{r libs, include=FALSE}
+
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(magrittr)
+
+library(readr)
+library(stringi)
+library(stringr)
+
+library(rmarkdown)
+library(knitr)
+library(yaml)
+
+library(rstan)
+library(loo)
+
+
+library(splines)
+library(matrixStats)
+library(abind)
+
+library(scales)
+library(ggplot2)
+library(ggfan)
+library(LexisPlotR)
+
+
+
+```
+
+```{r}
+sessionInfo()
+
+```
+
+## Iridis
+
+``` {r}
+readRDS("processed/hpc_sesh.Rds")
+
+
+```
