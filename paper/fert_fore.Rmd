@@ -1,6 +1,15 @@
 ---
 title: "Forecasting Fertility using Parametric Mixture Models"
-author: "Jason Hilton, Erengul Dodd, Jonathan J. Forster,  \nPeter W.F Smith, Jakub Bijak  \n Centre for Population Change,  \nUniversity of Southampton, UK"
+author: 
+ - Jason Hilton$^1$
+ - Erengul Dodd$^1$
+ - Jonathan J. Forster$^2$
+ - Peter W.F Smith$^1$
+ - Jakub Bijak$^1$
+ - $^1$ Centre for Population Change,  University of Southampton
+ - $^2$ Department of Statistics, University of Warwick
+ - "Correspondence: J.D.Hilton@soton.ac.uk"
+ - \newpage
 output: 
   bookdown::pdf_document2:
     toc: false
@@ -17,7 +26,7 @@ number-sections: true
 citation_package: none
 pandoc_args: [ "--csl", "apa-no-doi-no-issue.csl" ]
 link-citations: true
-abstract: "This paper sets out a forecasting method that employs a mixture of parametric functions to capture the pattern of fertility with respect to age. The overall level of cohort fertility is decomposed over the range of fertile ages using a mixture of parametric density functions. The level of fertility and the parameters describing the shape of the fertility curve are projected foward using time series methods. The model is estimated within a Bayesian framework, allowing predictive distributions of future fertility rates to be produced that naturally incorporat both time series and parametric uncertainty. A number of choices are possible for the precise form of the functions used in the two-component mixtures. The performance of several model variants is tested on data from four countries; England and Wales, the USA, Sweden and France. The former two countries exhibit multi-modality in their fertility rate curves as a function of age, while the latter two are largely uni-modal. The models are estimated using  Hamiltonian Monte Carlo and the `stan` software package on data covering the period up to 2006, with the period 2007-2016 held back for assessment purposes. Forecast performance is found to be comparable to other models identified as producing accurate fertility forecasts in the literature."
+abstract: This paper sets out a forecasting method that employs a mixture of parametric functions to capture the pattern of fertility with respect to age. The overall level of cohort fertility is decomposed over the range of fertile ages using a mixture of parametric density functions. The level of fertility and the parameters describing the shape of the fertility curve are projected foward using time series methods. The model is estimated within a Bayesian framework, allowing predictive distributions of future fertility rates to be produced that naturally incorporat both time series and parametric uncertainty. A number of choices are possible for the precise form of the functions used in the two-component mixtures. The performance of several model variants is tested on data from four countries; England and Wales, the USA, Sweden and France. The former two countries exhibit multi-modality in their fertility rate curves as a function of age, while the latter two are largely uni-modal. The models are estimated using  Hamiltonian Monte Carlo and the `stan` software package on data covering the period up to 2006, with the period 2007-2016 held back for assessment purposes. Forecast performance is found to be comparable to other models identified as producing accurate fertility forecasts in the literature.  \newpage
 ---
 
 ```{r setup, include=FALSE}
