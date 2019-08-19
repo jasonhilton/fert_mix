@@ -26,13 +26,10 @@ body {
 <body>
 
 <h1 id="forecasting-fertility-with-bayesian-parametric-mixtures">Forecasting fertility with Bayesian parametric mixtures</h1>
-<p>Jason Hilton<br />
-13 March 2019</p>
-<p>This repository provides the code needed to produce the results for the paper &quot;Forecasting Fertility using Bayesian Parametric Mixture Models&quot; by Jason Hilton, Jonathan J. Forster, Peter W.F. Smith and Jakub Bijak.</p>
-<p>The code is design so that the results can be replicated by running a series of <code>R</code> and shell scripts.</p>
+<p>This repository provides the code needed to produce the results for the paper &quot;Forecasting Fertility using Bayesian Parametric Mixture Models&quot; The code is design so that the results can be replicated by running a series of <code>R</code> and shell scripts.</p>
 <h2 id="requirements">Requirements</h2>
 <p>Running the code requires a recent version of <code>R</code> (&gt;3.5 is probably best) and of <code>rstan</code>, the <code>R</code> interface to (see here)[<a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started" class="uri">https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started</a>]. To run the assessment across a range of models and countries, a High Performance Computing (HPC) environment with the same setup and which accepts jobs with Portable Batch System (PBS) is needed.</p>
-<p>A range of other R packages is needed. These can be installed by running the <code>install_packages.R</code> script from same directory as this read-me file (this will make copy files to your machine):</p>
+<p>A range of other R packages is needed. These can be installed by running the <code>install_packages.R</code> script from same directory as this read-me file (this will obviously make changes to the R installation on your machine):</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">Rscript</span> scripts/install_packages.R</code></pre></div>
 <h2 id="get-the-data">Get the data</h2>
 <p>Before downloading the data, it is necessary to obtain a <a href="https://www.humanfertility.org/cgi-bin/main.php">Human Fertility Database</a> account, and to set environment variables containing your username and password. You can do this by adding the following lines to your <code>.Renviron.site</code> file (create one if you do not already have one), which will be in the directory specified by running the command <code>R.home()</code> in the R console, in the <code>etc</code> sub-folder.</p>
@@ -112,7 +109,7 @@ body {
 ## [28] ps_1.3.0          backports_1.1.4   htmltools_0.3.6  
 ## [31] assertthat_0.2.1  colorspace_1.4-1  lazyeval_0.2.2   
 ## [34] munsell_0.5.0     crayon_1.3.4</code></pre>
-<h2 id="iridis">Iridis</h2>
+<h2 id="hpc">HPC</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">readRDS</span>(<span class="st">&quot;processed/hpc_sesh.Rds&quot;</span>)</code></pre></div>
 <pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-pc-linux-gnu (64-bit)

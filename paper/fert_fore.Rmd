@@ -1,14 +1,6 @@
 ---
 title: "Forecasting Fertility using Parametric Mixture Models"
 author: 
- - Jason Hilton$^1$
- - Erengul Dodd$^1$
- - Jonathan J. Forster$^2$
- - Peter W.F Smith$^1$
- - Jakub Bijak$^1$
- - $^1$ Centre for Population Change,  University of Southampton
- - $^2$ Department of Statistics, University of Warwick
- - "Correspondence: J.D.Hilton@soton.ac.uk"
  - \newpage
 output: 
   bookdown::pdf_document2:
@@ -20,6 +12,7 @@ header-includes:
   - \doublespacing
   - \usepackage{caption}
   - \captionsetup[table]{skip=6pt}
+  - \usepackage{endfloat}
 fontsize: 12pt
 bibliography: param_fert.bib
 number-sections: true
@@ -186,7 +179,7 @@ The debate in the demographic literature around whether fertility is better unde
 
 The greater stability of cohort fertility has led to a number of approaches that focus on 'completing' cohort fertility. This involves inferring the fertility rates for cohort which have already started childbearing. For example, @Evans1986 completes cohort fertility based by predicting fertility for ages 25-45 using regressions that use the level and approximate gradient with respect to age of fertility rates between 15-25 as covariates. Similarly, @Congdon1993 adapts his previous work [@Congdon1990] by using Hadwiger functions to complete cohort fertility schedules from age 30 onwards, and subsequently forecasts forward Hadwiger parameters using time series methods. @DeBeer1985 fits ARIMA models to smooth fertility rates in both the cohort and age direction, so that information from both previous cohorts and from earlier ages can be used to complete cohort fertility schedules. @Cheng2010 use a more traditional Age-Period-Cohort model to incorporate effects along both time-varying dimensions.
 
-@Myrskyla2013a demonstrate a pragmatic method for completing cohort fertility whereby for each age, the average change in the fertility rate over the preceding 5-year period is assumed to persist for 5 years into the future. The authors describe this as the 'freeze-slope' approach, for obvious reasons, and this is contrasted with naive 'freeze-rate' approach, in which rates are held constant. @Schmertmann2014 incorporate elements of this approach within a conjugate normal-normal Bayesian model that generates prior distributions that smooth fertility rates in the both the age and cohort direction. The approach extracts three principal components from a large collection of historical data taken from the Human Fertility Database. One element of the constructed prior penalises deviations from linear combinations of these principal components. An additional element of the prior penalises deviations from both 'freeze-rate' and 'freeze-slope' projections. The priors are calibrated so that the size of the penalty reflects the distribution of such deviations in historical data. This approach is developed by @Ellison2018, who construct a hierarchical Bayesian model maintaining the underlying assumptions of the model of @Schmertmann2014.
+@Myrskyla2013a demonstrate a pragmatic method for completing cohort fertility whereby for each age, the average change in the fertility rate over the preceding 5-year period is assumed to persist for 5 years into the future. The authors describe this as the 'freeze-slope' approach, for obvious reasons, and this is contrasted with naive 'freeze-rate' approach, in which rates are held constant. @Schmertmann2014 incorporate elements of this approach within a conjugate normal-normal Bayesian model that generates prior distributions that smooth fertility rates in the both the age and cohort direction. The approach extracts three principal components from a large collection of historical data taken from the Human Fertility Database. One element of the constructed prior penalises deviations from linear combinations of these principal components. An additional element of the prior penalises deviations from both 'freeze-rate' and 'freeze-slope' projections. The priors are calibrated so that the size of the penalty reflects the distribution of such deviations in historical data. <SENTENCE REMOVED FOR BLINDING>
 
 An alternative approach focuses more on extrapolation. @Lee1993 adapts the principle component-based method of @leecarter1992, originally developed for mortality forecasting, to forecast fertility along the period axis. @Li2003 extend this method using cohort as the primary axis, while @Hyndman2007 provide a more general approach within the functional data framework.
 @Wisniowski2015 further adapt the @leecarter1992 approach as part of a comprehensive Bayesian population forecasting framework.
@@ -647,9 +640,6 @@ A relatively simplistic variant of the model has been proposed here, but there i
 
 In order to more fully evaluate the wider applicability of the model to the forecasting of fertility, a more comprehensive assessment exercise should be carried out along the lines of @Bohk-Ewald2018a, whereby forecasts errors are evaluated over a large range of countries and across many time periods. The present discussion has focused on the ability of the model to predict cohort trends in fertility, but forecasting along the period dimension is equally possible [e.g. @Congdon1993]. Looking further afield, the generality of the model described means that it may also be appropriate in other contexts in which bi-modal curves must be forecast into the future.
 
-
-# Acknowledgement {-}
-This work was supported by the ESRC Centre for Population Change - phase II (grant ES/K007394/1) at the University of Southampton. The use of the IRIDIS High Performance Computing Facility, and associated support services at the University of Southampton, in the completion of this work is also acknowledged. All the views presented in this paper are those of the authors only.
 
 # References {-}
 

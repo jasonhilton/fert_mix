@@ -1,18 +1,14 @@
 Forecasting fertility with Bayesian parametric mixtures
 ================
-Jason Hilton
-13 March 2019
 
-This repository provides the code needed to produce the results for the paper "Forecasting Fertility using Bayesian Parametric Mixture Models" by Jason Hilton, Jonathan J. Forster, Peter W.F. Smith and Jakub Bijak.
-
-The code is design so that the results can be replicated by running a series of `R` and shell scripts.
+This repository provides the code needed to produce the results for the paper "Forecasting Fertility using Bayesian Parametric Mixture Models" The code is design so that the results can be replicated by running a series of `R` and shell scripts.
 
 Requirements
 ------------
 
 Running the code requires a recent version of `R` (&gt;3.5 is probably best) and of `rstan`, the `R` interface to (see here)\[<https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started>\]. To run the assessment across a range of models and countries, a High Performance Computing (HPC) environment with the same setup and which accepts jobs with Portable Batch System (PBS) is needed.
 
-A range of other R packages is needed. These can be installed by running the `install_packages.R` script from same directory as this read-me file (this will make copy files to your machine):
+A range of other R packages is needed. These can be installed by running the `install_packages.R` script from same directory as this read-me file (this will obviously make changes to the R installation on your machine):
 
 ``` bash
 Rscript scripts/install_packages.R
@@ -160,8 +156,8 @@ sessionInfo()
     ## [31] assertthat_0.2.1  colorspace_1.4-1  lazyeval_0.2.2   
     ## [34] munsell_0.5.0     crayon_1.3.4
 
-Iridis
-------
+HPC
+---
 
 ``` r
 readRDS("processed/hpc_sesh.Rds")

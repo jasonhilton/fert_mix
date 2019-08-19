@@ -1,15 +1,12 @@
 ---
 title: "Forecasting fertility with Bayesian parametric mixtures"
-author: "Jason Hilton"
-date: "13 March 2019"
 output: html_document
 ---
 
 
 
 This repository provides the code needed to produce the results for the paper
-"Forecasting Fertility using Bayesian Parametric Mixture Models" by Jason Hilton, Jonathan J. Forster, Peter W.F. Smith and Jakub Bijak.
-
+"Forecasting Fertility using Bayesian Parametric Mixture Models" 
 The code is design so that the results can be replicated by running a series of `R` and shell scripts.
 
 
@@ -170,7 +167,7 @@ sessionInfo()
 
 ```
 
-## Iridis
+## HPC
 
 ``` {r}
 readRDS("processed/hpc_sesh.Rds")
